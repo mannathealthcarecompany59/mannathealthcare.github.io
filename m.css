@@ -1,0 +1,168 @@
+:root {
+  --primary: #2f8f4f;
+  --accent: #c7a64b;
+  --muted: #6c6c6c;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin: 0;
+  color: #111;
+  background: #fff;
+  overflow-x: hidden; /* horizontal scroll हटाएगा */
+   
+
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Navbar */
+.navbar-brand {
+  color: var(--primary) !important;
+  font-weight: 700;
+}
+
+/* Hero */
+.hero {
+  padding: 96px 1rem 48px;
+  background: linear-gradient(180deg, #fbfff8 0, #fff 100%);
+  text-align: center;
+}
+
+.hero .product-img {
+  max-width: 360px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(18, 18, 18, 0.08);
+  transition: transform 0.4s ease;
+}
+
+.hero .product-img:hover {
+  transform: scale(1.05);
+}
+
+/* CTA */
+.cta-btn {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.65rem 1.6rem;
+  border: 0;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.cta-btn:hover {
+  background: #276f40;
+  transform: scale(1.05);
+}
+
+/* Cards */
+.feature-card {
+  border-radius: 12px;
+  padding: 1.75rem;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(12, 12, 12, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Sticky buy (mobile) */
+.sticky-buy {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 16px;
+  z-index: 1100;
+  padding: 0.6rem 1.4rem;
+  border-radius: 40px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.sticky-buy:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+@media (min-width: 992px) {
+  .sticky-buy {
+    display: none;
+  }
+}
+
+/* Footer */
+footer {
+  background: #0b0b0b;
+  color: #ddd;
+  padding: 2.25rem 1rem;
+}
+
+/* Utilities */
+.text-success-strong {
+  color: var(--primary);
+}
+
+/* Theme small indicators */
+.theme-switcher {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.theme-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+.theme-dot.green {
+  background: var(--primary);
+}
+
+.theme-dot.blue {
+  background: #0d6efd;
+}
+
+.theme-dot.earth {
+  background: #8b5e3c;
+}
+
+/* Accessibility */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 0.75rem;
+  background: #000;
+  color: #fff;
+  border-radius: 6px;
+  z-index: 2000;
+}
