@@ -474,7 +474,77 @@ footer {
 .hero h1 {
   margin-top: 30px; /* sirf Vedma Ageless Brite ke upar space */
 }
+ body {
+      font-family: 'Poppins', sans-serif;
+      background: #f3f7fa;
+      padding: 20px;
+    }
 
+    form {
+      background: #fff;
+      padding: 25px;
+      border-radius: 14px;
+      max-width: 420px;
+      margin: 0 auto;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    label {
+      font-size: 15px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #qrSection {
+      display: none;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    #qrSection img {
+      width: 250px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    }
+
+    #qrSection p {
+      margin: 8px 0 0;
+      font-size: 14px;
+    }
 
   </style>
 
@@ -834,99 +904,80 @@ footer {
     </div>
 
     <!-- Order Form -->
-    <form class="row g-3 justify-content-center needs-validation" id="orderForm" action="/order" method="post" novalidate>
-      
-      <!-- Name -->
-      <div class="col-12 col-md-4">
-        <input id="name" name="name" type="text" class="form-control form-control-lg" placeholder="Your name" required>
-        <div class="invalid-feedback text-start">Please enter your name.</div>
-      </div>
-      
-      <!-- Phone -->
-      <div class="col-12 col-md-4">
-        <input id="phone" name="phone" type="tel" class="form-control form-control-lg" placeholder="10-digit phone number" 
-               required pattern="[6-9][0-9]{9}">
-        <div class="invalid-feedback text-start">Please enter a valid 10-digit phone number.</div>
-      </div>
+    <!-- Order Form -->
+     <form id="orderForm" onsubmit="sendOrder(event)">
+    <h2>Order Vedma Ageless Powder</h2>
 
-      <!-- Address -->
-      <div class="col-12">
-        <textarea id="address" name="address" rows="3" class="form-control form-control-lg" placeholder="Full address with landmark" required></textarea>
-        <div class="invalid-feedback text-start">Please enter your full address.</div>
-      </div>
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="tel" id="mobile" placeholder="Mobile Number" required>
+    <textarea id="address" placeholder="Full Address" required></textarea>
+    <input type="text" id="product" value="Vedma Ageless Powder" readonly>
+    <input type="number" id="quantity" placeholder="Quantity" min="1" value="1" required>
 
-      <!-- City & State -->
-      <div class="col-12 col-md-6">
-        <input id="city" name="city" type="text" class="form-control form-control-lg" placeholder="City" required>
-        <div class="invalid-feedback text-start">Please enter your city.</div>
-      </div>
-      <div class="col-12 col-md-6">
-        <input id="state" name="state" type="text" class="form-control form-control-lg" placeholder="State" required>
-        <div class="invalid-feedback text-start">Please enter your state.</div>
-      </div>
+    <label>
+      <input type="radio" name="payment" value="cod" onchange="handlePaymentOption(this.value)" required>
+      Cash on Delivery
+    </label><br>
+    <label>
+      <input type="radio" name="payment" value="prepaid" onchange="handlePaymentOption(this.value)">
+      Prepaid (Pay Now)
+    </label>
 
-      <!-- Pincode -->
-      <div class="col-12 col-md-4">
-        <input id="pincode" name="pincode" type="text" class="form-control form-control-lg" placeholder="Pincode" required pattern="[0-9]{6}">
-        <div class="invalid-feedback text-start">Please enter a valid 6-digit pincode.</div>
-      </div>
+    <div id="qrSection">
+      <p><b>📸 Scan & Pay:</b></p>
+      <img src="s.jpeg" alt="Payment QR Code">
+      <p>After payment, click “Submit Order” 👇</p>
+    </div>
 
-      <!-- Payment Options -->
-      <div class="col-12">
-        <h5 class="mt-3">Select Payment Method</h5>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="COD" checked>
-          <label class="form-check-label" for="cod">Cash on Delivery</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="paymentMethod" id="online" value="Online">
-          <label class="form-check-label" for="online">Online Payment</label>
-        </div>
-      </div>
+    <button type="submit">Submit Order</button>
+  </form>
+     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      // 🟢 Replace with your EmailJS Public Key
+      emailjs.init("-gK2PiQYKHTBDSeLc"); 
+    })();
 
-      <!-- QR Code (hidden by default, shown when "Online" is selected) -->
-      <div class="col-12" id="qrPayment" style="display: none;">
-        <p class="fw-bold mt-2">Scan & Pay Online:</p>
-      <img src="images/qr.jpeg" alt="UPI QR Code" class="img-fluid mb-2" style="max-width:200px;">
+    // Show or hide QR scanner for prepaid
+    function handlePaymentOption(value) {
+      const qrSection = document.getElementById("qrSection");
+      if (value === "prepaid") {
+        qrSection.style.display = "block";
+      } else {
+        qrSection.style.display = "none";
+      }
+    }
 
-    <p>
-  Or click here:
-  <!-- Generic UPI button -->
-  <a href="upi://pay?pa=sbhvi01-2@okicici&pn=VedmaAgelessBrite-9671228883&am=999&cu=INR" 
-     target="_blank" class="btn btn-sm btn-success mb-2">
-    Pay via UPI
-  </a>
-</p>
+    // Send order data
+    function sendOrder(event) {
+      event.preventDefault();
 
-<div class="d-flex flex-wrap gap-2 justify-content-center">
-  <!-- Google Pay -->
-  <a href="intent://upi/pay?pa=sbhvi01-2@okicici&pn=VedmaAgelessBrite-9671228883&am=999&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end"
-     class="btn btn-outline-primary btn-sm" target="_blank">
-    Pay with GPay
-  </a>
+      const name = document.getElementById("name").value;
+      const mobile = document.getElementById("mobile").value;
+      const address = document.getElementById("address").value;
+      const product = document.getElementById("product").value;
+      const quantity = document.getElementById("quantity").value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
 
-  <!-- PhonePe -->
-  <a href="phonepe://pay?pa=sbhvi01-2@okicici&pn=VedmaAgelessBrite-9671228883&am=999&cu=INR"
-     class="btn btn-outline-info btn-sm" target="_blank">
-    Pay with PhonePe
-  </a>
-
-  <!-- Paytm -->
-  <a href="paytmmp://pay?pa=sbhvi01-2@okicici&pn=VedmaAgelessBrite-9671228883&am=999&cu=INR"
-     class="btn btn-outline-dark btn-sm" target="_blank">
-    Pay with Paytm
-  </a>
-</div>
-
-
-      </div>
-
-      <!-- Submit -->
-      <div class="col-12 col-md-8">
-        <button type="submit" class="btn cta-btn btn-lg w-100">Place Order</button>
-      </div>
-    </form>
-
+      // 🟢 Replace with your Service ID and Template ID
+      emailjs.send("service_gylec2e", "template_0vprrxm", {
+        name: name,
+        mobile: mobile,
+        address: address,
+        product: product,
+        quantity: quantity,
+        payment: payment
+      })
+      .then(() => {
+        alert("✅ Order placed successfully! We'll contact you soon.");
+        document.getElementById("orderForm").reset();
+        document.getElementById("qrSection").style.display = "none";
+      }, (error) => {
+        alert("❌ Failed to send order. Please try again later.");
+        console.log(error);
+      });
+    }
+  </script>
     <p class="mt-3 text-muted">No hidden charges. Safe checkout.</p>
   </div>
 </section>
@@ -1017,4 +1068,5 @@ footer {
   </script>
 
 </body>
+
 </html>
