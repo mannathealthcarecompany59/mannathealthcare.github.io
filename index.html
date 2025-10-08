@@ -475,77 +475,7 @@ footer {
   margin-top: 30px; /* sirf Vedma Ageless Brite ke upar space */
 }
  
- body {
-      font-family: 'Poppins', sans-serif;
-      background: #f3f7fa;
-      padding: 20px;
-    }
 
-    form {
-      background: #fff;
-      padding: 25px;
-      border-radius: 14px;
-      max-width: 420px;
-      margin: 0 auto;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      color: #222;
-      margin-bottom: 20px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
-    }
-
-    textarea {
-      resize: none;
-      height: 80px;
-    }
-
-    label {
-      font-size: 15px;
-    }
-
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    #qrSection {
-      display: none;
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    #qrSection img {
-      width: 250px;
-      border-radius: 12px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.3);
-    }
-
-    #qrSection p {
-      margin: 8px 0 0;
-      font-size: 14px;
-    }
   </style>
 
   <script type="application/ld+json">
@@ -575,53 +505,7 @@ footer {
     }
   }
   </script>
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function() {
-      // 🟢 Replace with your EmailJS Public Key
-      emailjs.init("-gK2PiQYKHTBDSeLc"); 
-    })();
-
-    // Show or hide QR scanner for prepaid
-    function handlePaymentOption(value) {
-      const qrSection = document.getElementById("qrSection");
-      if (value === "prepaid") {
-        qrSection.style.display = "block";
-      } else {
-        qrSection.style.display = "none";
-      }
-    }
-
-    // Send order data
-    function sendOrder(event) {
-      event.preventDefault();
-
-      const name = document.getElementById("name").value;
-      const mobile = document.getElementById("mobile").value;
-      const address = document.getElementById("address").value;
-      const product = document.getElementById("product").value;
-      const quantity = document.getElementById("quantity").value;
-      const payment = document.querySelector('input[name="payment"]:checked').value;
-
-      // 🟢 Using your Service ID & Template ID
-      emailjs.send("service_gylec2e", "template_0vprrxm", {
-        name: name,
-        mobile: mobile,
-        address: address,
-        product: product,
-        quantity: quantity,
-        payment: payment
-      })
-      .then(() => {
-        alert("✅ Order placed successfully! We'll contact you soon.");
-        document.getElementById("orderForm").reset();
-        document.getElementById("qrSection").style.display = "none";
-      }, (error) => {
-        alert("❌ Failed to send order. Please try again later.");
-        console.log(error);
-      });
-    }
-  </script>
+  
 </head>
 <body>
   
@@ -951,32 +835,7 @@ footer {
     </div>
 
     <!-- Order Form -->
-   <form id="orderForm" onsubmit="sendOrder(event)">
-    <h2>Order Vedma Ageless Powder</h2>
-
-    <input type="text" id="name" placeholder="Full Name" required>
-    <input type="tel" id="mobile" placeholder="Mobile Number" required>
-    <textarea id="address" placeholder="Full Address" required></textarea>
-    <input type="text" id="product" value="Vedma Ageless Powder" readonly>
-    <input type="number" id="quantity" placeholder="Quantity" min="1" value="1" required>
-
-    <label>
-      <input type="radio" name="payment" value="cod" onchange="handlePaymentOption(this.value)" required>
-      Cash on Delivery
-    </label><br>
-    <label>
-      <input type="radio" name="payment" value="prepaid" onchange="handlePaymentOption(this.value)">
-      Prepaid (Pay Now)
-    </label>
-
-    <div id="qrSection">
-      <p><b>📸 Scan & Pay:</b></p>
-      <img src="s.jpeg" alt="Payment QR Code">
-      <p>After payment, click “Submit Order” 👇</p>
-    </div>
-
-    <button type="submit">Submit Order</button>
-  </form>
+ 
   </main>
 
   <a href="#buy" class="sticky-buy d-lg-none" data-aos="fade-up" data-aos-offset="0">Buy Now — ₹999</a>
@@ -1055,3 +914,4 @@ footer {
 </body>
 
 </html>
+
