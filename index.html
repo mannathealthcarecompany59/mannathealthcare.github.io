@@ -474,6 +474,7 @@ footer {
 .hero h1 {
   margin-top: 30px; /* sirf Vedma Ageless Brite ke upar space */
 }
+ 
  body {
       font-family: 'Poppins', sans-serif;
       background: #f3f7fa;
@@ -545,7 +546,6 @@ footer {
       margin: 8px 0 0;
       font-size: 14px;
     }
-
   </style>
 
   <script type="application/ld+json">
@@ -574,6 +574,53 @@ footer {
       "reviewCount": "87"
     }
   }
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      // 🟢 Replace with your EmailJS Public Key
+      emailjs.init("-gK2PiQYKHTBDSeLc"); 
+    })();
+
+    // Show or hide QR scanner for prepaid
+    function handlePaymentOption(value) {
+      const qrSection = document.getElementById("qrSection");
+      if (value === "prepaid") {
+        qrSection.style.display = "block";
+      } else {
+        qrSection.style.display = "none";
+      }
+    }
+
+    // Send order data
+    function sendOrder(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const mobile = document.getElementById("mobile").value;
+      const address = document.getElementById("address").value;
+      const product = document.getElementById("product").value;
+      const quantity = document.getElementById("quantity").value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
+
+      // 🟢 Using your Service ID & Template ID
+      emailjs.send("service_gylec2e", "template_0vprrxm", {
+        name: name,
+        mobile: mobile,
+        address: address,
+        product: product,
+        quantity: quantity,
+        payment: payment
+      })
+      .then(() => {
+        alert("✅ Order placed successfully! We'll contact you soon.");
+        document.getElementById("orderForm").reset();
+        document.getElementById("qrSection").style.display = "none";
+      }, (error) => {
+        alert("❌ Failed to send order. Please try again later.");
+        console.log(error);
+      });
+    }
   </script>
 </head>
 <body>
@@ -904,8 +951,7 @@ footer {
     </div>
 
     <!-- Order Form -->
-    <!-- Order Form -->
-     <form id="orderForm" onsubmit="sendOrder(event)">
+   <form id="orderForm" onsubmit="sendOrder(event)">
     <h2>Order Vedma Ageless Powder</h2>
 
     <input type="text" id="name" placeholder="Full Name" required>
@@ -931,67 +977,6 @@ footer {
 
     <button type="submit">Submit Order</button>
   </form>
-     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function() {
-      // 🟢 Replace with your EmailJS Public Key
-      emailjs.init("-gK2PiQYKHTBDSeLc"); 
-    })();
-
-    // Show or hide QR scanner for prepaid
-    function handlePaymentOption(value) {
-      const qrSection = document.getElementById("qrSection");
-      if (value === "prepaid") {
-        qrSection.style.display = "block";
-      } else {
-        qrSection.style.display = "none";
-      }
-    }
-
-    // Send order data
-    function sendOrder(event) {
-      event.preventDefault();
-
-      const name = document.getElementById("name").value;
-      const mobile = document.getElementById("mobile").value;
-      const address = document.getElementById("address").value;
-      const product = document.getElementById("product").value;
-      const quantity = document.getElementById("quantity").value;
-      const payment = document.querySelector('input[name="payment"]:checked').value;
-
-      // 🟢 Replace with your Service ID and Template ID
-      emailjs.send("service_gylec2e", "template_0vprrxm", {
-        name: name,
-        mobile: mobile,
-        address: address,
-        product: product,
-        quantity: quantity,
-        payment: payment
-      })
-      .then(() => {
-        alert("✅ Order placed successfully! We'll contact you soon.");
-        document.getElementById("orderForm").reset();
-        document.getElementById("qrSection").style.display = "none";
-      }, (error) => {
-        alert("❌ Failed to send order. Please try again later.");
-        console.log(error);
-      });
-    }
-  </script>
-    <p class="mt-3 text-muted">No hidden charges. Safe checkout.</p>
-  </div>
-</section>
-
-<script>
-  // Toggle QR Code visibility
-  document.querySelectorAll('input[name="paymentMethod"]').forEach((radio) => {
-    radio.addEventListener("change", function () {
-      document.getElementById("qrPayment").style.display = 
-        this.value === "Online" ? "block" : "none";
-    });
-  });
-</script>
-
   </main>
 
   <a href="#buy" class="sticky-buy d-lg-none" data-aos="fade-up" data-aos-offset="0">Buy Now — ₹999</a>
