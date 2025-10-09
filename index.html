@@ -989,14 +989,17 @@ footer {
     })()
   </script>
 
-    <script>
+   <script>
 document.addEventListener("DOMContentLoaded", function () {
   const toggleBtn = document.getElementById("toggleProducts");
   const productSection = document.getElementById("productSection");
   const fadeItems = document.querySelectorAll(".fade-item");
+  const navbarCollapse = document.getElementById("primaryNav"); // Bootstrap collapse
 
   toggleBtn.addEventListener("click", function (e) {
     e.preventDefault();
+    
+    // Toggle product section
     productSection.classList.toggle("show");
 
     if (productSection.classList.contains("show")) {
@@ -1011,17 +1014,20 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       fadeItems.forEach(item => item.classList.remove("visible"));
     }
+
+    // ✅ Auto close navbar on mobile
+    if (navbarCollapse.classList.contains("show")) {
+      const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
+      bsCollapse.hide();
+    }
   });
 });
 </script>
 
-<!-- ✅ Bootstrap + Icons CDN (put at end of <body>) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>
+
 
 
 
